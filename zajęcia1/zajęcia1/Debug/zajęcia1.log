@@ -1,0 +1,3 @@
+﻿  Source.cpp
+l:\grafika\zajęcia1\zajęcia1\source.cpp(27): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  zajęcia1.vcxproj -> L:\Grafika\zajęcia1\Debug\zajęcia1.exe
