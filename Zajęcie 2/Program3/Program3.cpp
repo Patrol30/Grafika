@@ -8,14 +8,12 @@
 #include <math.h>
 #define GL_PI 3.1415f
 
-// Adds two vectors together
 void gltAddVectors(const GLTVector3 vFirst, const GLTVector3 vSecond, GLTVector3 vResult) {
 	vResult[0] = vFirst[0] + vSecond[0];
 	vResult[1] = vFirst[1] + vSecond[1];
 	vResult[2] = vFirst[2] + vSecond[2];
 }
 
-// Subtract one vector from another
 void gltSubtractVectors(const GLTVector3 vFirst, const GLTVector3 vSecond, GLTVector3 vResult)
 {
 	vResult[0] = vFirst[0] - vSecond[0];
@@ -23,44 +21,37 @@ void gltSubtractVectors(const GLTVector3 vFirst, const GLTVector3 vSecond, GLTVe
 	vResult[2] = vFirst[2] - vSecond[2];
 }
 
-// Scales a vector by a scalar
 void gltScaleVector(GLTVector3 vVector, const GLfloat fScale)
 {
 	vVector[0] *= fScale; vVector[1] *= fScale; vVector[2] *= fScale;
 }
 
-// Gets the length of a vector squared
 GLfloat gltGetVectorLengthSqrd(const GLTVector3 vVector)
 {
 	return (vVector[0] * vVector[0]) + (vVector[1] * vVector[1]) + (vVector[2] * vVector[2]);
 }
 
-// Gets the length of a vector
 GLfloat gltGetVectorLength(const GLTVector3 vVector)
 {
 	return (GLfloat)sqrt(gltGetVectorLengthSqrd(vVector));
 }
 
-// Scales a vector by it's length - creates a unit vector
 void gltNormalizeVector(GLTVector3 vNormal)
 {
 	GLfloat fLength = 1.0f / gltGetVectorLength(vNormal);
 	gltScaleVector(vNormal, fLength);
 }
 
-// Copies a vector
 void gltCopyVector(const GLTVector3 vSource, GLTVector3 vDest)
 {
 	memcpy(vDest, vSource, sizeof(GLTVector3));
 }
 
-// Get the dot product between two vectors
 GLfloat gltVectorDotProduct(const GLTVector3 vU, const GLTVector3 vV)
 {
 	return vU[0] * vV[0] + vU[1] * vV[1] + vU[2] * vV[2];
 }
 
-// Calculate the cross product of two vectors
 void gltVectorCrossProduct(const GLTVector3 vU, const GLTVector3 vV, GLTVector3 vResult)
 {
 	vResult[0] = vU[1] * vV[2] - vV[1] * vU[2];
@@ -70,7 +61,6 @@ void gltVectorCrossProduct(const GLTVector3 vU, const GLTVector3 vV, GLTVector3 
 
 
 
-// Given three points on a plane in counter clockwise order, calculate the unit normal
 void gltGetNormalVector(const GLTVector3 vP1, const GLTVector3 vP2, const GLTVector3 vP3, GLTVector3 vNormal)
 {
 	GLTVector3 vV1, vV2;
@@ -84,7 +74,6 @@ void gltGetNormalVector(const GLTVector3 vP1, const GLTVector3 vP2, const GLTVec
 
 
 
-// Transform a point by a 4x4 matrix
 void gltTransformPoint(const GLTVector3 vSrcVector, const GLTMatrix mMatrix, GLTVector3 vOut)
 {
 	vOut[0] = mMatrix[0] * vSrcVector[0] + mMatrix[4] * vSrcVector[1] + mMatrix[8] * vSrcVector[2] + mMatrix[12];
@@ -92,7 +81,6 @@ void gltTransformPoint(const GLTVector3 vSrcVector, const GLTMatrix mMatrix, GLT
 	vOut[2] = mMatrix[2] * vSrcVector[0] + mMatrix[6] * vSrcVector[1] + mMatrix[10] * vSrcVector[2] + mMatrix[14];
 }
 
-// Rotates a vector using a 4x4 matrix. Translation column is ignored
 void gltRotateVector(const GLTVector3 vSrcVector, const GLTMatrix mMatrix, GLTVector3 vOut)
 {
 	vOut[0] = mMatrix[0] * vSrcVector[0] + mMatrix[4] * vSrcVector[1] + mMatrix[8] * vSrcVector[2];
@@ -101,19 +89,13 @@ void gltRotateVector(const GLTVector3 vSrcVector, const GLTMatrix mMatrix, GLTVe
 }
 
 
-// Gets the three coefficients of a plane equation given three points on the plane.
 void gltGetPlaneEquation(GLTVector3 vPoint1, GLTVector3 vPoint2, GLTVector3 vPoint3, GLTVector3 vPlane)
 {
-	// Get normal vector from three points. The normal vector is the first three coefficients
-	// to the plane equation...
 	gltGetNormalVector(vPoint1, vPoint2, vPoint3, vPlane);
 
-	// Final coefficient found by back substitution
 	vPlane[3] = -(vPlane[0] * vPoint3[0] + vPlane[1] * vPoint3[1] + vPlane[2] * vPoint3[2]);
 }
 
-// Determine the distance of a point from a plane, given the point and the
-// equation of the plane.
 GLfloat gltDistanceToPlane(GLTVector3 vPoint, GLTVector4 vPlane)
 {
 	return vPoint[0] * vPlane[0] + vPoint[1] * vPlane[1] + vPoint[2] * vPlane[2] + vPlane[3];
@@ -144,32 +126,23 @@ GLfloat gltDistanceToPlane(GLTVector3 vPoint, GLTVector4 vPlane)
 
 
 
-// Wielkoci obrotÛw
 static GLfloat xRot = 0.0f;
 static GLfloat yRot = 0.0f;
-// Zmiana przestrzeni widocznej i okna.
-// Wywo≥ywana w momencie zmiany rozmiaru okna
 void ChangeSize(int w, int h)
 {
 	GLfloat fAspect;
-	// Zabezpieczenie przed dzieleniem przez zero
 	if (h == 0)
 		h = 1;
-	// ZrÛwnanie wielkoúci widoku i okna
 	glViewport(0, 0, w, h);
 	fAspect = (GLfloat)w / (GLfloat)h;
-	// Ustalenie uk≥adu wspÛ≥rzÍdnych
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	// Utworzenie rzutowania perspektywicznego
 	gluPerspective(35.0f, fAspect, 1.0, 40.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
 
 
-// Ta funkcja wykonuje wszystkie konieczne inicjalizacje kontekstu renderowania.
-// Tutaj, konfiguruje i inicjalizuje oúwietlenie sceny
 void SetupRC()
 {
 	GLuint texture;
@@ -181,32 +154,25 @@ void SetupRC()
 	GLenum eFormat = {
 		GL_RGBA
 	};
-	// Wartoci i wspÛ≥rzdne úwiat≥a
+	
 	GLfloat whiteLight[] = { 0.05f, 0.05f, 0.05f, 1.0f };
 	GLfloat sourceLight[] = { 0.25f, 0.25f, 0.25f, 1.0f };
 	GLfloat lightPos[] = { -10.f, 5.0f, 5.0f, 1.0f };
-	glEnable(GL_DEPTH_TEST); // Usuwanie ukrytych powierzchni
-	glEnable(GL_CULL_FACE); // Nie bdziemy prowadzi oblicze wntrza samolotu
-	glFrontFace(GL_CCW); // Wielokty z nawiniciem przeciwnym do ruchu wskazÛwek zegara
-						 // W≥czenie owietlenia
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE); 
+	glFrontFace(GL_CCW); 
+						 
 	glEnable(GL_LIGHTING);
-	// Konfiguracja i w≥πczenie úwiat≥a numer 0
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, whiteLight);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, sourceLight);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, sourceLight);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 	glEnable(GL_LIGHT0);
-	// W≥czenie ledzenia kolorÛw
 	glEnable(GL_COLOR_MATERIAL);
-	// W≥aciwoci owietlenia otoczenia i rozproszenia
-	// bd ledzi wartoci podawane funkcji glColor
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-	// Czarne t≥o
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	// £adowanie tekstury
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	// Generate a name for the texture
 	glGenTextures(1, &texture);
 
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -225,7 +191,6 @@ void SetupRC()
 	glEnable(GL_TEXTURE_2D);
 }
 
-// Reakcje na klawisze strza≥ek
 void SpecialKeys(int key, int x, int y)
 {
 	if (key == GLUT_KEY_UP)
@@ -238,10 +203,8 @@ void SpecialKeys(int key, int x, int y)
 		yRot += 5.0f;
 	xRot = (GLfloat)((const int)xRot % 360);
 	yRot = (GLfloat)((const int)yRot % 360);
-	// Odwieenie zawartoci okna
 	glutPostRedisplay();
 }
-// Wywo≥ywana w celu przerysowania sceny
 void RenderScene(void)
 {
 	GLfloat xc[9], yc[9], angle;
@@ -266,18 +229,15 @@ void RenderScene(void)
 	{ xc[6], 0.0f, yc[6] } , 
 	{ xc[7], 0.0f, yc[7] } , 
 	{ xc[8], 0.0f, yc[8] } , 
-	};// Czyszczenie okna aktualnym kolorem czyszczπcym
+	};
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	// Zapisanie stanu macierzy i wykonanie obrotÛw
 	glPushMatrix();
-	// CofniÍcie obiektÛw
 	glTranslatef(0.0f, -0.25f, -4.0f);
 	glRotatef(xRot, 1.0f, 0.0f, 0.0f);
 	glRotatef(yRot, 0.0f, 1.0f, 0.0f);
-	// Rysowanie piramidy
 	glColor3f(1.0f, 1.0f, 1.0f);
 	glBegin(GL_TRIANGLES);
-	// Podstawa piramidy - dwa trÛjkπty
+	// Podstawa piramidy - dwa trÈé©kÈùñy
 	glNormal3f(0.0f, -1.0f, 0.0f);
 	glTexCoord2f(1.0f, 1.0f);
 	glVertex3fv(vCorners[2]);
@@ -328,9 +288,7 @@ void RenderScene(void)
 	glTexCoord2f(1.0f, 0.0f);
 	glVertex3fv(vCorners[2]);
 	glEnd();
-	// Odtworzenie stanu macierzy
 	glPopMatrix();
-	// Zamiana buforÛw
 	glutSwapBuffers();
 }
 int main(int argc, char *argv[])
