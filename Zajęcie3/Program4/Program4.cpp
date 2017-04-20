@@ -11,30 +11,30 @@
 #include "colors.h"
 #include "targa.h"
 
-// wska?nik na funkcjê glWindowPos2i
+// wska?nik na funkcjÄ™ glWindowPos2i
 
 PFNGLWINDOWPOS2IPROC glWindowPos2i = NULL;
 
-// sta³e do obs³ugi menu podrêcznego
+// staÅ‚e do obsÅ‚ugi menu podrÄ™cznego
 
 enum
 {
 	PERSPECTIVE_CORRECTION_FASTEST,     // korekcja perspektywy - GL_FASTEST
 	PERSPECTIVE_CORRECTION_DONT_CARE,   // korekcja perspektywy - GL_DONT_CARE
 	PERSPECTIVE_CORRECTION_NICEST,      // korekcja perspektywy - GL_NICEST
-	GENERATE_MIPMAP_FASTEST,            // jakoœæ generowania mipmap - GL_FASTEST
-	GENERATE_MIPMAP_DONT_CARE,          // jakoœæ generowania mipmap - GL_DONT_CARE
-	GENERATE_MIPMAP_NICEST,             // jakoœæ generowania mipmap - GL_NICEST
-	FULL_WINDOW,                        // aspekt obrazu - ca³e okno
+	GENERATE_MIPMAP_FASTEST,            // jakoÅ›Ä‡ generowania mipmap - GL_FASTEST
+	GENERATE_MIPMAP_DONT_CARE,          // jakoÅ›Ä‡ generowania mipmap - GL_DONT_CARE
+	GENERATE_MIPMAP_NICEST,             // jakoÅ›Ä‡ generowania mipmap - GL_NICEST
+	FULL_WINDOW,                        // aspekt obrazu - caÅ‚e okno
 	ASPECT_1_1,                         // aspekt obrazu 1:1
-	EXIT                                // wyjœcie
+	EXIT                                // wyjÅ›cie
 };
 
 // aspekt obrazu
 
 int aspect = FULL_WINDOW;
 
-// usuniêcie definicji makr near i far
+// usuniÄ™cie definicji makr near i far
 
 #ifdef near
 #undef near
@@ -43,7 +43,7 @@ int aspect = FULL_WINDOW;
 #undef far
 #endif
 
-// rozmiary bry³y obcinania
+// rozmiary bryÅ‚y obcinania
 
 const GLdouble left = -2.0;
 const GLdouble right = 2.0;
@@ -52,20 +52,20 @@ const GLdouble top = 2.0;
 const GLdouble near = 3.0;
 const GLdouble far = 7.0;
 
-// k¹ty obrotu
+// kÄ…ty obrotu
 
 GLfloat rotatex = 0.0;
 GLfloat rotatey = 0.0;
 
-// wska?nik naciœniêcia lewego przycisku myszki
+// wska?nik naciÅ›niÄ™cia lewego przycisku myszki
 
 int button_state = GLUT_UP;
 
-// po³o?enie kursora myszki
+// poÅ‚o?enie kursora myszki
 
 int button_x, button_y;
 
-// wspó³czynnik skalowania
+// wspÃ³Å‚czynnik skalowania
 
 GLfloat scale = 1.5;
 
@@ -73,53 +73,53 @@ GLfloat scale = 1.5;
 
 GLuint GROUND, WOOD, ROOF,OKNO;
 
-// identyfikatory list wyœwietlania
+// identyfikatory list wyÅ›wietlania
 
 GLint GROUND_LIST, WOOD_LIST, ROOF_LIST,OKNO_LIST;
 
-// filtr pomniejszaj¹cy
+// filtr pomniejszajÄ…cy
 
 GLint min_filter = GL_LINEAR_MIPMAP_LINEAR;
 
-// wskazówki do korekcji perspektywy przy renderingu tekstur
+// wskazÃ³wki do korekcji perspektywy przy renderingu tekstur
 
 GLint perspective_correction_hint = GL_DONT_CARE;
 
-// wskazówki do automatycznego generowania mipmap
+// wskazÃ³wki do automatycznego generowania mipmap
 
 GLint mipmap_generation_hint = GL_DONT_CARE;
 
-// funkcja rysuj¹ca napis w wybranym miejscu
-// (wersja korzystaj¹ca z funkcji glWindowPos2i)
+// funkcja rysujÄ…ca napis w wybranym miejscu
+// (wersja korzystajÄ…ca z funkcji glWindowPos2i)
 
 void DrawString(GLint x, GLint y, char *string)
 {
-	// po³o?enie napisu
+	// poÅ‚o?enie napisu
 	glWindowPos2i(x, y);
 
-	// wyœwietlenie napisu
+	// wyÅ›wietlenie napisu
 	int len = strlen(string);
 	for (int i = 0; i < len; i++)
 		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, string[i]);
 }
 
-// funkcja generuj¹ca scenê 3D
+// funkcja generujÄ…ca scenÄ™ 3D
 
 void DisplayScene()
 {
-	// kolor t³a - zawartoœæ bufora koloru
+	// kolor tÅ‚a - zawartoÅ›Ä‡ bufora koloru
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 
-	// czyszczenie bufora koloru i bufora g³êbokoœci
+	// czyszczenie bufora koloru i bufora gÅ‚Ä™bokoÅ›ci
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// wybór macierzy modelowania
+	// wybÃ³r macierzy modelowania
 	glMatrixMode(GL_MODELVIEW);
 
 	// macierz modelowania = macierz jednostkowa
 	glLoadIdentity();
 
-	// przesuniêcie uk³adu wspó³rzêdnych obiektów do œrodka bry³y odcinania
+	// przesuniÄ™cie ukÅ‚adu wspÃ³Å‚rzÄ™dnych obiektÃ³w do Å›rodka bryÅ‚y odcinania
 	glTranslatef(0.0, 0.0, -(near + far) / 2);
 
 	// obroty obiektu
@@ -129,32 +129,32 @@ void DisplayScene()
 	// skalowanie obiektu - klawisze "+" i "-"
 	glScalef(scale, scale, scale);
 
-	// w³¹czenie testu bufora g³êbokoœci
+	// wÅ‚Ä…czenie testu bufora gÅ‚Ä™bokoÅ›ci
 	glEnable(GL_DEPTH_TEST);
 
-	// w³¹czenie teksturowania dwuwymiarowego
+	// wÅ‚Ä…czenie teksturowania dwuwymiarowego
 	glEnable(GL_TEXTURE_2D);
 
-	// filtr powiêkszaj¹cy
+	// filtr powiÄ™kszajÄ…cy
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	// filtr pomniejszaj¹cy
+	// filtr pomniejszajÄ…cy
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min_filter);
 
-	// wskazówki do korekcji perspektywy przy renderingu tekstur
+	// wskazÃ³wki do korekcji perspektywy przy renderingu tekstur
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, perspective_correction_hint);
 
-	// ustawienie parametów œrodowiska tekstur
+	// ustawienie parametÃ³w Å›rodowiska tekstur
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-	// rysowanie pod³o?a
+	// rysowanie podÅ‚o?a
 	glBindTexture(GL_TEXTURE_2D, GROUND);
 	glPushMatrix();
 	glTranslatef(0.0, -1.0, 0.0);
 	glCallList(GROUND_LIST);
 	glPopMatrix();
 
-	// rysowanie œcian domku
+	// rysowanie Å›cian domku
 	glBindTexture(GL_TEXTURE_2D, WOOD);
 	glPushMatrix();
 	glTranslatef(0.0, -0.5, 0.0);
@@ -178,15 +178,15 @@ void DisplayScene()
 	glCallList(ROOF_LIST);
 	glPopMatrix();
 
-	// wy³¹czenie teksturowania dwuwymiarowego
+	// wyÅ‚Ä…czenie teksturowania dwuwymiarowego
 	glDisable(GL_TEXTURE_2D);
 
-	// wyœwietlenie wybranych informacje
+	// wyÅ›wietlenie wybranych informacje
 	char string[200];
 	GLint var;
 	glColor3fv(Black);
 
-	// pobranie informacji o filtrze pomniejszaj¹cy
+	// pobranie informacji o filtrze pomniejszajÄ…cy
 	glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, &var);
 	switch (var)
 	{
@@ -212,7 +212,7 @@ void DisplayScene()
 	}
 	DrawString(2, glutGet(GLUT_WINDOW_HEIGHT) - 17, string);
 
-	// pobranie informacji o wskazówkach do automatycznego generowania mipmap
+	// pobranie informacji o wskazÃ³wkach do automatycznego generowania mipmap
 	glGetIntegerv(GL_PERSPECTIVE_CORRECTION_HINT, &var);
 	switch (var)
 	{
@@ -228,7 +228,7 @@ void DisplayScene()
 	}
 	DrawString(2, glutGet(GLUT_WINDOW_HEIGHT) - 33, string);
 
-	// pobranie informacji o wskazówkach do korekcji perspektywy przy renderingu tekstur
+	// pobranie informacji o wskazÃ³wkach do korekcji perspektywy przy renderingu tekstur
 	glGetIntegerv(GL_GENERATE_MIPMAP_HINT, &var);
 	switch (var)
 	{
@@ -247,32 +247,32 @@ void DisplayScene()
 	// skierowanie polece? do wykonania
 	glFlush();
 
-	// zamiana buforów koloru
+	// zamiana buforÃ³w koloru
 	glutSwapBuffers();
 }
 
-// zmiana wielkoœci okna
+// zmiana wielkoÅ›ci okna
 
 void Reshape(int width, int height)
 {
-	// obszar renderingu - ca³e okno
+	// obszar renderingu - caÅ‚e okno
 	glViewport(0, 0, width, height);
 
-	// wybór macierzy rzutowania
+	// wybÃ³r macierzy rzutowania
 	glMatrixMode(GL_PROJECTION);
 
 	// macierz rzutowania = macierz jednostkowa
 	glLoadIdentity();
 
-	// parametry bry³y obcinania
+	// parametry bryÅ‚y obcinania
 	if (aspect == ASPECT_1_1)
 	{
-		// wysokoœæ okna wiêksza od wysokoœci okna
+		// wysokoÅ›Ä‡ okna wiÄ™ksza od wysokoÅ›ci okna
 		if (width < height && width > 0)
 			glFrustum(left, right, bottom*height / width, top*height / width, near, far);
 		else
 
-			// szerokoœæ okna wiêksza lub równa wysokoœci okna
+			// szerokoÅ›Ä‡ okna wiÄ™ksza lub rÃ³wna wysokoÅ›ci okna
 			if (width >= height && height > 0)
 				glFrustum(left*width / height, right*width / height, bottom, top, near, far);
 	}
@@ -283,7 +283,7 @@ void Reshape(int width, int height)
 	DisplayScene();
 }
 
-// obs³uga klawiatury
+// obsÅ‚uga klawiatury
 
 void Keyboard(unsigned char key, int x, int y)
 {
@@ -300,16 +300,16 @@ void Keyboard(unsigned char key, int x, int y)
 	DisplayScene();
 }
 
-// obs³uga przycisków myszki
+// obsÅ‚uga przyciskÃ³w myszki
 
 void MouseButton(int button, int state, int x, int y)
 {
 	if (button == GLUT_LEFT_BUTTON)
 	{
-		// zapamiêtanie stanu lewego przycisku myszki
+		// zapamiÄ™tanie stanu lewego przycisku myszki
 		button_state = state;
 
-		// zapamiêtanie po³o?enia kursora myszki
+		// zapamiÄ™tanie poÅ‚o?enia kursora myszki
 		if (state == GLUT_DOWN)
 		{
 			button_x = x;
@@ -318,7 +318,7 @@ void MouseButton(int button, int state, int x, int y)
 	}
 }
 
-// obs³uga ruchu kursora myszki
+// obsÅ‚uga ruchu kursora myszki
 
 void MouseMotion(int x, int y)
 {
@@ -336,21 +336,21 @@ void MouseMotion(int x, int y)
 
 void GenerateTextures()
 {
-	// zmienne u?yte przy obs³udze plików TARGA
+	// zmienne u?yte przy obsÅ‚udze plikÃ³w TARGA
 	GLsizei width, height;
 	GLenum format, type;
 	GLvoid *pixels;
 
-	// tryb upakowania bajtów danych tekstury
+	// tryb upakowania bajtÃ³w danych tekstury
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	// wskazówki do automatycznego generowania mipmap
+	// wskazÃ³wki do automatycznego generowania mipmap
 	glHint(GL_GENERATE_MIPMAP_HINT, mipmap_generation_hint);
 
 	// wczytanie tekstury ground1-2.tga
 	GLboolean error = load_targa("ground1-2.tga", width, height, format, type, pixels);
 
-	// b³¹d odczytu pliku
+	// bÅ‚Ä…d odczytu pliku
 	if (error == GL_FALSE)
 	{
 		printf("Niepoprawny odczyt pliku ground1-2.tga");
@@ -360,22 +360,22 @@ void GenerateTextures()
 	// utworzenie identyfikatora tekstury
 	glGenTextures(1, &GROUND);
 
-	// dowi¹zanie stanu tekstury
+	// dowiÄ…zanie stanu tekstury
 	glBindTexture(GL_TEXTURE_2D, GROUND);
 
-	// w³¹czenie automatycznego generowania mipmap
+	// wÅ‚Ä…czenie automatycznego generowania mipmap
 	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 
 	// definiowanie tekstury (z mipmapami)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, type, pixels);
 
-	// porz¹dki
+	// porzÄ…dki
 	delete[](unsigned char*)pixels;
 
 	// wczytanie tekstury wall_wood_verti_color.tga
 	error = load_targa("wall_wood_verti_color.tga", width, height, format, type, pixels);
 
-	// b³¹d odczytu pliku
+	// bÅ‚Ä…d odczytu pliku
 	if (error == GL_FALSE)
 	{
 		printf("Niepoprawny odczyt pliku wall_wood_verti_color.tga");
@@ -385,22 +385,22 @@ void GenerateTextures()
 	// utworzenie identyfikatora tekstury
 	glGenTextures(1, &WOOD);
 
-	// dowi¹zanie stanu tekstury
+	// dowiÄ…zanie stanu tekstury
 	glBindTexture(GL_TEXTURE_2D, WOOD);
 
-	// w³¹czenie automatycznego generowania mipmap
+	// wÅ‚Ä…czenie automatycznego generowania mipmap
 	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 
 	// definiowanie tekstury (z mipmapami)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, type, pixels);
 
-	// porz¹dki
+	// porzÄ…dki
 	delete[](unsigned char*)pixels;
 
 	// wczytanie tekstury roof_old_rectangle_color.tga
 	error = load_targa("roof_old_rectangle_color.tga", width, height, format, type, pixels);
 
-	// b³¹d odczytu pliku
+	// bÅ‚Ä…d odczytu pliku
 	if (error == GL_FALSE)
 	{
 		printf("Niepoprawny odczyt pliku roof_old_rectangle_color.tga");
@@ -410,23 +410,23 @@ void GenerateTextures()
 	// utworzenie identyfikatora tekstury
 	glGenTextures(1, &ROOF);
 
-	// dowi¹zanie stanu tekstury
+	// dowiÄ…zanie stanu tekstury
 	glBindTexture(GL_TEXTURE_2D, ROOF);
 
-	// w³¹czenie automatycznego generowania mipmap
+	// wÅ‚Ä…czenie automatycznego generowania mipmap
 	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 
 	// definiowanie tekstury (z mipmapami)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, type, pixels);
 
-	// porz¹dki
+	// porzÄ…dki
 	delete[](unsigned char*)pixels;
 
 	//////////////////////////////////////////////////////////////
 	// wczytanie tekstury okno.tga
 	error = load_targa("okno.tga", width, height, format, type, pixels);
 
-	// b³¹d odczytu pliku
+	// bÅ‚Ä…d odczytu pliku
 	if (error == GL_FALSE)
 	{
 		printf("Niepoprawny odczyt pliku okno.tga");
@@ -436,27 +436,27 @@ void GenerateTextures()
 	// utworzenie identyfikatora tekstury
 	glGenTextures(1, &OKNO);
 
-	// dowi¹zanie stanu tekstury
+	// dowiÄ…zanie stanu tekstury
 	glBindTexture(GL_TEXTURE_2D, OKNO);
 
-	// w³¹czenie automatycznego generowania mipmap
+	// wÅ‚Ä…czenie automatycznego generowania mipmap
 	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 
 	// definiowanie tekstury (z mipmapami)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, type, pixels);
 
-	// porz¹dki
+	// porzÄ…dki
 	delete[](unsigned char*)pixels;
 
 }
 
-// obs³uga menu podrêcznego
+// obsÅ‚uga menu podrÄ™cznego
 
 void Menu(int value)
 {
 	switch (value)
 	{
-		// filtr pomniejszaj¹cy
+		// filtr pomniejszajÄ…cy
 	case GL_NEAREST_MIPMAP_NEAREST:
 	case GL_NEAREST_MIPMAP_LINEAR:
 	case GL_LINEAR_MIPMAP_NEAREST:
@@ -465,46 +465,46 @@ void Menu(int value)
 		DisplayScene();
 		break;
 
-		// wskazówka GL_FASTEST do korekcji perspektywy przy renderingu tekstur
+		// wskazÃ³wka GL_FASTEST do korekcji perspektywy przy renderingu tekstur
 	case PERSPECTIVE_CORRECTION_FASTEST:
 		perspective_correction_hint = GL_FASTEST;
 		DisplayScene();
 		break;
 
-		// wskazówka GL_DONT_CARE do korekcji perspektywy przy renderingu tekstur
+		// wskazÃ³wka GL_DONT_CARE do korekcji perspektywy przy renderingu tekstur
 	case PERSPECTIVE_CORRECTION_DONT_CARE:
 		perspective_correction_hint = GL_DONT_CARE;
 		DisplayScene();
 		break;
 
-		// wskazówka GL_NICEST do korekcji perspektywy przy renderingu tekstur
+		// wskazÃ³wka GL_NICEST do korekcji perspektywy przy renderingu tekstur
 	case PERSPECTIVE_CORRECTION_NICEST:
 		perspective_correction_hint = GL_NICEST;
 		DisplayScene();
 		break;
 
-		// wskazówka do automatycznego generowania mipmap
+		// wskazÃ³wka do automatycznego generowania mipmap
 	case GENERATE_MIPMAP_FASTEST:
 		GenerateTextures();
 		mipmap_generation_hint = GL_FASTEST;
 		DisplayScene();
 		break;
 
-		// wskazówka GL_DONT_CARE do automatycznego generowania mipmap
+		// wskazÃ³wka GL_DONT_CARE do automatycznego generowania mipmap
 	case GENERATE_MIPMAP_DONT_CARE:
 		GenerateTextures();
 		mipmap_generation_hint = GL_DONT_CARE;
 		DisplayScene();
 		break;
 
-		// wskazówka GL_NICEST do automatycznego generowania mipmap
+		// wskazÃ³wka GL_NICEST do automatycznego generowania mipmap
 	case GENERATE_MIPMAP_NICEST:
 		GenerateTextures();
 		mipmap_generation_hint = GL_NICEST;
 		DisplayScene();
 		break;
 
-		// obszar renderingu - ca³e okno
+		// obszar renderingu - caÅ‚e okno
 	case FULL_WINDOW:
 		aspect = FULL_WINDOW;
 		Reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
@@ -516,23 +516,23 @@ void Menu(int value)
 		Reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 		break;
 
-		// wyjœcie
+		// wyjÅ›cie
 	case EXIT:
 		exit(0);
 	}
 }
 
-// utworzenie list wyœwietlania
+// utworzenie list wyÅ›wietlania
 
 void GenerateDisplayLists()
 {
-	// generowanie identyfikatora pierwszej listy wyœwietlania
+	// generowanie identyfikatora pierwszej listy wyÅ›wietlania
 	GROUND_LIST = glGenLists(1);
 
-	// pierwsza lista wyœwietlania - pod³o?e
+	// pierwsza lista wyÅ›wietlania - podÅ‚o?e
 	glNewList(GROUND_LIST, GL_COMPILE);
 
-	// czworok¹t
+	// czworokÄ…t
 	glBegin(GL_QUADS);
 	glTexCoord2f(16.0, 0.0);
 	glVertex3f(-8.0, 0.0, -8.0);
@@ -544,19 +544,19 @@ void GenerateDisplayLists()
 	glVertex3f(8.0, 0.0, -8.0);
 	glEnd();
 
-	// koniec pierwszej listy wyœwietlania
+	// koniec pierwszej listy wyÅ›wietlania
 	glEndList();
 
-	// generowanie identyfikatora drugiej listy wyœwietlania
+	// generowanie identyfikatora drugiej listy wyÅ›wietlania
 	WOOD_LIST = glGenLists(1);
 
-	// druga lista wyœwietlania - œciany chatki
+	// druga lista wyÅ›wietlania - Å›ciany chatki
 	glNewList(WOOD_LIST, GL_COMPILE);
 
-	// seria trójk¹tów
+	// seria trÃ³jkÄ…tÃ³w
 	glBegin(GL_TRIANGLES);
 
-	// przednia œciana
+	// przednia Å›ciana
 	glTexCoord2f(0.0, 0.0);
 	glVertex3f(-1.0, -1.0, 1.0);
 	glTexCoord2f(2.0, 0.0);
@@ -570,7 +570,7 @@ void GenerateDisplayLists()
 	glTexCoord2f(0.0, 2.0);
 	glVertex3f(-1.0, 1.0, 1.0);
 
-	// prawa boczna œciana
+	// prawa boczna Å›ciana
 	glTexCoord2f(0.0, 0.0);
 	glVertex3f(1.0, 1.0, -1.0);
 	glTexCoord2f(2.0, 0.0);
@@ -584,7 +584,7 @@ void GenerateDisplayLists()
 	glTexCoord2f(0.0, 2.0);
 	glVertex3f(1.0, -1.0, -1.0);
 
-	// lewa boczna œciana
+	// lewa boczna Å›ciana
 	glTexCoord2f(0.0, 0.0);
 	glVertex3f(-1.0, -1.0, -1.0);
 	glTexCoord2f(2.0, 0.0);
@@ -598,7 +598,7 @@ void GenerateDisplayLists()
 	glTexCoord2f(2.0, 2.0);
 	glVertex3f(-1.0, 1.0, 1.0);
 
-	// tylna œciana
+	// tylna Å›ciana
 	glTexCoord2f(0.0, 0.0);
 	glVertex3f(-1.0, -1.0, -1.0);
 	glTexCoord2f(0.0, 2.0);
@@ -629,19 +629,19 @@ void GenerateDisplayLists()
 	glVertex3f(1.0, 1.0, -1.0);
 	glEnd();
 
-	// koniec drugiej listy wyœwietlania
+	// koniec drugiej listy wyÅ›wietlania
 	glEndList();
 
-	// generowanie identyfikatora trzeciej listy wyœwietlania
+	// generowanie identyfikatora trzeciej listy wyÅ›wietlania
 	ROOF_LIST = glGenLists(1);
 
-	// trzecia lista wyœwietlania - dach chatki
+	// trzecia lista wyÅ›wietlania - dach chatki
 	glNewList(ROOF_LIST, GL_COMPILE);
 
-	// dwa czworok¹ty
+	// dwa czworokÄ…ty
 	glBegin(GL_QUADS);
 
-	// lewa czêœæ dachu
+	// lewa czÄ™Å›Ä‡ dachu
 	glTexCoord2f(2.0, 2.0);
 	glVertex3f(0.0, 2.0, 1.2);
 	glTexCoord2f(0.0, 2.0);
@@ -651,7 +651,7 @@ void GenerateDisplayLists()
 	glTexCoord2f(2.0, 0.0);
 	glVertex3f(-1.0, 1.0, 1.2);
 
-	// prawa czêœæ dachu
+	// prawa czÄ™Å›Ä‡ dachu
 	glTexCoord2f(2.0, 2.0);
 	glVertex3f(0.0, 2.0, -1.2);
 	glTexCoord2f(0.0, 2.0);
@@ -662,46 +662,46 @@ void GenerateDisplayLists()
 	glVertex3f(1.0, 1.0, -1.2);
 	glEnd();
 
-	// koniec trzeciej listy wyœwietlania
+	// koniec trzeciej listy wyÅ›wietlania
 	glEndList();
 	////////////////////////////////
-	// generowanie identyfikatora czwartej listy wyœwietlania
+	// generowanie identyfikatora czwartej listy wyÅ›wietlania
 	OKNO_LIST = glGenLists(1);
 
-	// czwarta lista wyœwietlania - okno
+	// czwarta lista wyÅ›wietlania - okno
 	glNewList(OKNO_LIST, GL_COMPILE);
 
 
-	// seria trójk¹tów
+	// seria trÃ³jkÄ…tÃ³w
 	glBegin(GL_TRIANGLES);
 	// przednie okno 1
 	glTexCoord2f(0.0, 0.0);
-	glVertex3f(-0.95, -0.33, 1.001);
+	glVertex3f(-0.2, -0.33, 1.001);
 	glTexCoord2f(1.0, 0.0);
-	glVertex3f(-0.4, -0.33, 1.001);
+	glVertex3f(-0.8, -0.33, 1.001);
 	glTexCoord2f(1.0, 1.0);
-	glVertex3f(-0.4, 0.66, 1.001);
+	glVertex3f(-0.8, 0.66, 1.001);
 	glTexCoord2f(0.0, 0.0);
-	glVertex3f(-0.95, -0.33, 1.001);
+	glVertex3f(-0.2, -0.33, 1.001);
 	glTexCoord2f(1.0, 1.0);
-	glVertex3f(-0.4, 0.66, 1.001);
+	glVertex3f(-0.8, 0.66, 1.001);
 	glTexCoord2f(0.0, 1.0);
-	glVertex3f(-0.95, 0.66, 1.001);
+	glVertex3f(-0.2, 0.66, 1.001);
 
 
 	// przednie okno 2
 	glTexCoord2f(0.0, 0.0);
-	glVertex3f(0.4, -0.33, 1.001);
+	glVertex3f(0.2, -0.33, 1.001);
 	glTexCoord2f(1.0, 0.0);
-	glVertex3f(0.95, -0.33, 1.001);
+	glVertex3f(0.8, -0.33, 1.001);
 	glTexCoord2f(1.0, 1.0);
-	glVertex3f(0.95, 0.66, 1.001);
+	glVertex3f(0.8, 0.66, 1.001);
 	glTexCoord2f(0.0, 0.0);
-	glVertex3f(0.4, -0.33, 1.001);
+	glVertex3f(0.2, -0.33, 1.001);
 	glTexCoord2f(1.0, 1.0);
-	glVertex3f(0.95, 0.66, 1.001);
+	glVertex3f(0.8, 0.66, 1.001);
 	glTexCoord2f(0.0, 1.0);
-	glVertex3f(0.4, 0.66, 1.001);
+	glVertex3f(0.2, 0.66, 1.001);
 
 	// tylnie okno 1
 	glTexCoord2f(0.0, 0.0);
@@ -801,13 +801,13 @@ void GenerateDisplayLists()
 	glVertex3f(-1.001, -0.33, -0.8);
 	glTexCoord2f(0.0, 1.0);
 	glVertex3f(-1.001, -0.33, -0.2);
-	
+	glEnd();
 
-	// koniec CZWARTEJ listy wyœwietlania
+	// koniec CZWARTEJ listy wyÅ›wietlania
 	glEndList();
 }
 
-// sprawdzenie i przygotowanie obs³ugi wybranych rozszerze?
+// sprawdzenie i przygotowanie obsÅ‚ugi wybranych rozszerze?
 
 void ExtensionSetup()
 {
@@ -819,7 +819,7 @@ void ExtensionSetup()
 	if (sscanf(version, "%d.%d", &major, &minor) != 2)
 	{
 #ifdef WIN32
-		printf("B³êdny format wersji OpenGL\n");
+		printf("BÅ‚Ä™dny format wersji OpenGL\n");
 #else
 
 		printf("Bledny format wersji OpenGL\n");
@@ -829,7 +829,7 @@ void ExtensionSetup()
 	}
 
 	// sprawdzenie czy jest co najmniej wersja 1.4 OpenGL lub
-	// czy jest obs³ugiwane rozszerzenie GL_SGIS_generate_mipmap
+	// czy jest obsÅ‚ugiwane rozszerzenie GL_SGIS_generate_mipmap
 	if (!(major > 1 || minor >= 4) &&
 		!glutExtensionSupported("GL_SGIS_generate_mipmap"))
 	{
@@ -844,7 +844,7 @@ void ExtensionSetup()
 		glWindowPos2i = (PFNGLWINDOWPOS2IPROC)wglGetProcAddress("glWindowPos2i");
 	}
 	else
-		// sprawdzenie czy jest obs³ugiwane rozszerzenie ARB_window_pos
+		// sprawdzenie czy jest obsÅ‚ugiwane rozszerzenie ARB_window_pos
 		if (glutExtensionSupported("GL_ARB_window_pos"))
 		{
 			// pobranie wska?nika wybranej funkcji rozszerzenia ARB_window_pos
@@ -866,28 +866,28 @@ int main(int argc, char *argv[])
 	// inicjalizacja bufora ramki
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
-	// rozmiary g³ównego okna programu
+	// rozmiary gÅ‚Ã³wnego okna programu
 	glutInitWindowSize(500, 500);
 
-	// utworzenie g³ównego okna programu
+	// utworzenie gÅ‚Ã³wnego okna programu
 	glutCreateWindow("Mipmapy 2D");
 
-	// do³¹czenie funkcji generuj¹cej scenê 3D
+	// doÅ‚Ä…czenie funkcji generujÄ…cej scenÄ™ 3D
 	glutDisplayFunc(DisplayScene);
 
-	// do³¹czenie funkcji wywo³ywanej przy zmianie rozmiaru okna
+	// doÅ‚Ä…czenie funkcji wywoÅ‚ywanej przy zmianie rozmiaru okna
 	glutReshapeFunc(Reshape);
 
-	// do³¹czenie funkcji obs³ugi klawiatury
+	// doÅ‚Ä…czenie funkcji obsÅ‚ugi klawiatury
 	glutKeyboardFunc(Keyboard);
 
-	// obs³uga przycisków myszki
+	// obsÅ‚uga przyciskÃ³w myszki
 	glutMouseFunc(MouseButton);
 
-	// obs³uga ruchu kursora myszki
+	// obsÅ‚uga ruchu kursora myszki
 	glutMotionFunc(MouseMotion);
 
-	// utworzenie podmenu - Filtr pomniejszaj¹cy
+	// utworzenie podmenu - Filtr pomniejszajÄ…cy
 	int MenuMinFilter = glutCreateMenu(Menu);
 	glutAddMenuEntry("GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST);
 	glutAddMenuEntry("GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR);
@@ -910,7 +910,7 @@ int main(int argc, char *argv[])
 	int MenuAspect = glutCreateMenu(Menu);
 #ifdef WIN32
 
-	glutAddMenuEntry("Aspekt obrazu - ca³e okno", FULL_WINDOW);
+	glutAddMenuEntry("Aspekt obrazu - caÅ‚e okno", FULL_WINDOW);
 #else
 
 	glutAddMenuEntry("Aspekt obrazu - cale okno", FULL_WINDOW);
@@ -918,16 +918,16 @@ int main(int argc, char *argv[])
 
 	glutAddMenuEntry("Aspekt obrazu 1:1", ASPECT_1_1);
 
-	// menu g³ówne
+	// menu gÅ‚Ã³wne
 	glutCreateMenu(Menu);
 
 #ifdef WIN32
 
-	glutAddSubMenu("Filtr pomniejszaj¹cy", MenuMinFilter);
+	glutAddSubMenu("Filtr pomniejszajÄ…cy", MenuMinFilter);
 	glutAddSubMenu("GL_PERSPECTIVE_CORRECTION_HINT", PerspectiveCorrectionHint);
 	glutAddSubMenu("GL_GENERATE_MIPMAP_HINT", GenerateMipmapHint);
 	glutAddSubMenu("Aspekt obrazu", MenuAspect);
-	glutAddMenuEntry("Wyjœcie", EXIT);
+	glutAddMenuEntry("WyjÅ›cie", EXIT);
 #else
 
 	glutAddSubMenu("Filtr pomniejszajacy", MenuMinFilter);
@@ -937,19 +937,19 @@ int main(int argc, char *argv[])
 	glutAddMenuEntry("Wyjscie", EXIT);
 #endif
 
-	// okreœlenie przycisku myszki obs³uguj¹cego menu podrêczne
+	// okreÅ›lenie przycisku myszki obsÅ‚ugujÄ…cego menu podrÄ™czne
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 	// utworzenie tekstur
 	GenerateTextures();
 
-	// sprawdzenie i przygotowanie obs³ugi wybranych rozszerze?
+	// sprawdzenie i przygotowanie obsÅ‚ugi wybranych rozszerze?
 	ExtensionSetup();
 
-	// utworzenie list wyœwietlania
+	// utworzenie list wyÅ›wietlania
 	GenerateDisplayLists();
 
-	// wprowadzenie programu do obs³ugi pêtli komunikatów
+	// wprowadzenie programu do obsÅ‚ugi pÄ™tli komunikatÃ³w
 	glutMainLoop();
 	return 0;
 }
